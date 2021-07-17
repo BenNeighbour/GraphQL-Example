@@ -18,26 +18,25 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EmployeeResolver {
 
-    private final EmployeeDao employeeDao;
+  private final EmployeeDao employeeDao;
 
-    @GraphQLQuery(name = "getAllEmployees")
-    public List<Employee> getAllEmployees() {
-        return employeeDao.findAll();
-    }
+  @GraphQLQuery(name = "getAllEmployees")
+  public List<Employee> getAllEmployees() {
+    return employeeDao.findAll();
+  }
 
-    @GraphQLQuery(name = "getEmployeeById")
-    public Optional<Employee> getEmployeeById(@GraphQLArgument(name = "id") UUID id) {
-        return employeeDao.findById(id);
-    }
+  @GraphQLQuery(name = "getEmployeeById")
+  public Optional<Employee> getEmployeeById(@GraphQLArgument(name = "id") UUID id) {
+    return employeeDao.findById(id);
+  }
 
-    @GraphQLMutation(name = "saveEmployee")
-    public Employee saveEmployee(@GraphQLArgument(name = "employee") Employee company) {
-        return employeeDao.save(company);
-    }
+  @GraphQLMutation(name = "saveEmployee")
+  public Employee saveEmployee(@GraphQLArgument(name = "employee") Employee company) {
+    return employeeDao.save(company);
+  }
 
-    @GraphQLMutation(name = "deleteEmployee")
-    public void deleteEmployee(@GraphQLArgument(name = "id") UUID companyId) {
-        employeeDao.deleteById(companyId);
-    }
-
+  @GraphQLMutation(name = "deleteEmployee")
+  public void deleteEmployee(@GraphQLArgument(name = "id") UUID companyId) {
+    employeeDao.deleteById(companyId);
+  }
 }

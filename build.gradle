@@ -1,18 +1,18 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.2'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.5.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
 
 repositories {
-	mavenLocal()
-	mavenCentral()
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencyManagement {
-	imports {
-		mavenBom "org.springframework.boot:spring-boot-starter-parent:2.5.2"
-	}
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:2.5.2"
+    }
 }
 
 group = 'com.benneighbour'
@@ -22,29 +22,29 @@ def graphqlVersion = "12.0.0"
 def spqrVersion = "0.0.6"
 
 dependencies {
-	compileOnly "org.projectlombok:lombok:1.18.12"
-	annotationProcessor "org.projectlombok:lombok:1.18.12"
-	testCompileOnly "org.projectlombok:lombok:1.18.12"
-	testAnnotationProcessor "org.projectlombok:lombok:1.18.12"
+    compileOnly "org.projectlombok:lombok:1.18.12"
+    annotationProcessor "org.projectlombok:lombok:1.18.12"
+    testCompileOnly "org.projectlombok:lombok:1.18.12"
+    testAnnotationProcessor "org.projectlombok:lombok:1.18.12"
 
-	implementation "io.leangen.graphql:graphql-spqr-spring-boot-starter:${spqrVersion}"
+    implementation "io.leangen.graphql:graphql-spqr-spring-boot-starter:${spqrVersion}"
 
-	compileOnly "org.postgresql:postgresql:42.1.1"
-	implementation "org.hibernate.validator:hibernate-validator:7.0.1.Final"
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly "org.postgresql:postgresql:42.1.1"
+    implementation "org.hibernate.validator:hibernate-validator:7.0.1.Final"
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 bootJar {
-	enabled = false
+    enabled = false
 }
 
 jar {
-	enabled = true
+    enabled = true
 }

@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface EmployeeDao extends JpaRepository<Employee, UUID> {
-}
+public interface EmployeeDao extends JpaRepository<Employee, UUID> {}
