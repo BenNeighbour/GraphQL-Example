@@ -6,12 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -40,6 +38,14 @@ public class Employee implements Serializable {
   @NotNull(message = "A Person must have a Vehicle!")
   @GraphQLQuery(name = "personalVehicle", description = "A Person's Mode of Transport")
   private Vehicle personalVehicle;
+
+  @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @GraphQLQuery(name = "company", description = "The Company a Person works for")
+  private Company company;
+
+  @OneToMany(targetEntity = Role.class, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+  @GraphQLQuery(name = "roles", description = "The Role a Person plays in their Company")
+  private List<Role> roles;
 
   public enum Vehicle {
     CAR,

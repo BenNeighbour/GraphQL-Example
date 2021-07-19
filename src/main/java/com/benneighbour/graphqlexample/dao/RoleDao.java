@@ -1,15 +1,15 @@
 package com.benneighbour.graphqlexample.dao;
 
-import com.benneighbour.graphqlexample.model.Employee;
+import com.benneighbour.graphqlexample.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Repository
-public interface EmployeeDao extends JpaRepository<Employee, UUID> {
+public interface RoleDao extends JpaRepository<Role, UUID> {
 
-  List<Employee> findAllByCompanyIdIn(Set<UUID> companyIds);
+    List<List<Role>> findAllByEmployeeIdIn(List<UUID> employeeIds);
+
 }

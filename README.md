@@ -1,3 +1,1 @@
 ## GraphQL Example
-
-

@@ -2,21 +2,22 @@ package com.benneighbour.graphqlexample.resolver;
 
 import com.benneighbour.graphqlexample.dao.CompanyDao;
 import com.benneighbour.graphqlexample.model.Company;
-import io.leangen.graphql.annotations.GraphQLArgument;
-import io.leangen.graphql.annotations.GraphQLContext;
-import io.leangen.graphql.annotations.GraphQLMutation;
-import io.leangen.graphql.annotations.GraphQLQuery;
+import io.leangen.graphql.annotations.*;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Validated
 @GraphQLApi
+@Transactional
 @RequiredArgsConstructor
 public class CompanyResolver {
 
@@ -27,18 +28,14 @@ public class CompanyResolver {
     return companyDao.findAll();
   }
 
-  @GraphQLQuery(name = "getCompanyById")
-  public Optional<Company> getCompanyId(@GraphQLArgument(name = "id") UUID id) {
-    return companyDao.findById(id);
-  }
-
   @GraphQLMutation(name = "saveCompany")
-  public Company saveCompany(@GraphQLArgument(name = "company") Company company) {
+  public Company saveCompany(
+      @GraphQLArgument(name = "company") @GraphQLNonNull @Valid Company company) {
     return companyDao.save(company);
   }
 
   @GraphQLMutation(name = "deleteCompany")
-  public void deleteCompany(@GraphQLArgument(name = "id") UUID companyId) {
+  public void deleteCompany(@GraphQLArgument(name = "id") @GraphQLNonNull @Valid UUID companyId) {
     companyDao.deleteById(companyId);
   }
 
