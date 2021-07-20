@@ -43,8 +43,13 @@ public class Employee implements Serializable {
   @GraphQLQuery(name = "company", description = "The Company a Person works for")
   private Company company;
 
-  @OneToMany(targetEntity = Role.class, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
   @GraphQLQuery(name = "roles", description = "The Role a Person plays in their Company")
+  @OneToMany(
+      targetEntity = Role.class,
+      orphanRemoval = true,
+      fetch = FetchType.LAZY,
+      mappedBy = "employee",
+      cascade = CascadeType.ALL)
   private List<Role> roles;
 
   public enum Vehicle {

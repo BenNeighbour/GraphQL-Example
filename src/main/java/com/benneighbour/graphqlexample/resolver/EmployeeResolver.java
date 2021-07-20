@@ -8,8 +8,8 @@ import io.leangen.graphql.execution.ResolutionEnvironment;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.RequiredArgsConstructor;
 import org.dataloader.DataLoader;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -19,9 +19,9 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Service
+@Validated
 @GraphQLApi
 @Transactional
-@Component
 @RequiredArgsConstructor
 public class EmployeeResolver {
 
@@ -52,7 +52,6 @@ public class EmployeeResolver {
   @GraphQLQuery(name = "company")
   public CompletableFuture<Company> getCompanyById(
           @GraphQLContext @Valid @GraphQLNonNull Employee employee, @GraphQLEnvironment ResolutionEnvironment env) {
-    /* TODO: Handle null events */
     DataLoader<UUID, Company> loader = env.dataFetchingEnvironment.getDataLoader("company");
     return loader.load(employee.getCompany().getId());
   }

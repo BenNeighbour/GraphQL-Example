@@ -6,14 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -43,6 +41,15 @@ public class Company implements Serializable {
   @NotNull(message = "There must be a Company Type!")
   @GraphQLQuery(name = "type", description = "The type of company")
   private CompanyType type;
+
+  @GraphQLQuery(name = "offices", description = "The Company's offices")
+  @OneToMany(
+      targetEntity = Office.class,
+      orphanRemoval = true,
+      fetch = FetchType.LAZY,
+      mappedBy = "company",
+      cascade = CascadeType.ALL)
+  private List<Office> offices;
 
   public enum CompanyType {
     PRIVATE_LIMITED,
