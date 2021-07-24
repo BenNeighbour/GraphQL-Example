@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,7 +52,7 @@ public class Employee implements Serializable {
       fetch = FetchType.LAZY,
       mappedBy = "employee",
       cascade = CascadeType.ALL)
-  private List<Role> roles;
+  private List<Role> roles = new ArrayList<>();
 
   public enum Vehicle {
     CAR,

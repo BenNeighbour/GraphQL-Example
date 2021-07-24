@@ -7,6 +7,7 @@ import com.benneighbour.graphqlexample.model.Company;
 import com.benneighbour.graphqlexample.model.Office;
 import com.benneighbour.graphqlexample.model.Role;
 import io.leangen.graphql.spqr.spring.autoconfigure.DataLoaderRegistryFactory;
+import org.apache.commons.collections4.list.FixedSizeList;
 import org.dataloader.BatchLoader;
 import org.dataloader.DataLoader;
 import org.dataloader.DataLoaderRegistry;
@@ -14,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -43,25 +41,29 @@ public class DataLoaderFactory implements DataLoaderRegistryFactory {
   }
 
   public static CompletableFuture<List<List<Role>>> roles(List<UUID> ids) {
-    List<List<Role>> lists = new ArrayList<>();
+    List<List<Role>> bucketedList = new ArrayList<>(Collections.nCopies(ids.size(), new ArrayList<>()));
 
     roleDao.findAllByEmployeeIdIn(ids).stream()
-        .flatMap(Collection::stream)
-        .collect(Collectors.groupingBy(role -> role.getEmployee().getId()))
-        .forEach((uuid, role) -> lists.add(role));
+            .flatMap(Collection::stream)
+            .collect(Collectors.groupingBy(role -> role.getEmployee().getId()))
+            .forEach((uuid, roles) -> {
+              bucketedList.set(ids.indexOf(uuid), roles);
+            });
 
-    return CompletableFuture.completedFuture(lists);
+    return CompletableFuture.completedFuture(bucketedList);
   }
 
   public static CompletableFuture<List<List<Office>>> offices(List<UUID> ids) {
-    List<List<Office>> lists = new ArrayList<>();
+    List<List<Office>> bucketedList = new ArrayList<>(Collections.nCopies(ids.size(), new ArrayList<>()));
 
     officeDao.findAllByCompanyIdIn(ids).stream()
         .flatMap(Collection::stream)
         .collect(Collectors.groupingBy(office -> office.getCompany().getId()))
-        .forEach((uuid, offices) -> lists.add(offices));
+        .forEach((uuid, offices) -> {
+          bucketedList.set(ids.indexOf(uuid), offices);
+        });
 
-    return CompletableFuture.completedFuture(lists);
+    return CompletableFuture.completedFuture(bucketedList);
   }
 
   @Override
