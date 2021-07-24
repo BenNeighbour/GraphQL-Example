@@ -7,7 +7,6 @@ import com.benneighbour.graphqlexample.model.Company;
 import com.benneighbour.graphqlexample.model.Office;
 import com.benneighbour.graphqlexample.model.Role;
 import io.leangen.graphql.spqr.spring.autoconfigure.DataLoaderRegistryFactory;
-import org.apache.commons.collections4.list.FixedSizeList;
 import org.dataloader.BatchLoader;
 import org.dataloader.DataLoader;
 import org.dataloader.DataLoaderRegistry;

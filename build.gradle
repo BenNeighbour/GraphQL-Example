@@ -25,7 +25,6 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:1.18.12"
 
     implementation "io.leangen.graphql:graphql-spqr-spring-boot-starter:0.0.6"
-    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
 
     compileOnly "org.postgresql:postgresql:42.1.1"
     implementation "org.hibernate.validator:hibernate-validator:7.0.1.Final"
