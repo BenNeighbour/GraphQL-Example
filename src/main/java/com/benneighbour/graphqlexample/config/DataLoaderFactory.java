@@ -40,9 +40,9 @@ public class DataLoaderFactory implements DataLoaderRegistryFactory {
   private static CompanyDao companyDao;
   private static final BatchLoader<UUID, Company> companyLoader = DataLoaderFactory::companies;
   private static RoleDao roleDao;
-  private static final BatchLoader<UUID, List<Role>> roleLoader = DataLoaderFactory::roles;
+  private static final BatchLoader<UUID, List<Role>> roleLoader = DataLoaderFactory::loadRoles;
   private static OfficeDao officeDao;
-  private static final BatchLoader<UUID, List<Office>> officeLoader = DataLoaderFactory::offices;
+  private static final BatchLoader<UUID, List<Office>> officeLoader = DataLoaderFactory::loadOffices;
 
   @Autowired
   public DataLoaderFactory(CompanyDao companyDao, RoleDao roleDao, OfficeDao officeDao) {
@@ -55,7 +55,7 @@ public class DataLoaderFactory implements DataLoaderRegistryFactory {
     return CompletableFuture.completedFuture(companyDao.findAllById(ids));
   }
 
-  public static CompletableFuture<List<List<Role>>> roles(List<UUID> ids) {
+  public static CompletableFuture<List<List<Role>>> loadRoles(List<UUID> ids) {
     List<List<Role>> bucketedList = new ArrayList<>(Collections.nCopies(ids.size(), new ArrayList<>()));
 
     roleDao.findAllByEmployeeIdIn(ids).stream()
@@ -68,7 +68,7 @@ public class DataLoaderFactory implements DataLoaderRegistryFactory {
     return CompletableFuture.completedFuture(bucketedList);
   }
 
-  public static CompletableFuture<List<List<Office>>> offices(List<UUID> ids) {
+  public static CompletableFuture<List<List<Office>>> loadOffices(List<UUID> ids) {
     List<List<Office>> bucketedList = new ArrayList<>(Collections.nCopies(ids.size(), new ArrayList<>()));
 
     officeDao.findAllByCompanyIdIn(ids).stream()
