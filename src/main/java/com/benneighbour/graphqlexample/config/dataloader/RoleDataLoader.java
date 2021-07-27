@@ -28,24 +28,31 @@ import java.util.stream.Collectors;
 @Component
 public class RoleDataLoader {
 
-    private static RoleDao roleDao;
+  private static RoleDao roleDao;
 
-    @Autowired
-    public RoleDataLoader(RoleDao roleDao) {
-        RoleDataLoader.roleDao = roleDao;
-    }
+  @Autowired
+  public RoleDataLoader(RoleDao roleDao) {
+    RoleDataLoader.roleDao = roleDao;
+  }
 
-    public static CompletableFuture<List<List<Role>>> loadRoles(List<UUID> ids) {
-        List<List<Role>> bucketedList = new ArrayList<>(Collections.nCopies(ids.size(), new ArrayList<>()));
+  public static CompletableFuture<List<List<Role>>> loadRoles(List<UUID> ids) {
+    /* Create a list (with multiple sub-lists) of the same size as the input */
+    List<List<Role>> bucketedList =
+        new ArrayList<>(Collections.nCopies(ids.size(), new ArrayList<>()));
 
-        roleDao.findAllByEmployeeIdIn(ids).stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.groupingBy(role -> role.getEmployee().getId()))
-                .forEach((uuid, roles) -> {
-                    bucketedList.set(ids.indexOf(uuid), roles);
-                });
+    /* Batch load all of the companies that contain the given ids */
+    roleDao.findAllByEmployeeIdIn(ids).stream()
+        /* Convert to Key~Value Pair */
+        .flatMap(Collection::stream)
+        /* Group the hashmap by the company ids */
+        .collect(Collectors.groupingBy(role -> role.getEmployee().getId()))
+        /* For each item that maps to an id, group it into the right "bucket" */
+        .forEach(
+            (uuid, roles) -> {
+              bucketedList.set(ids.indexOf(uuid), roles);
+            });
 
-        return CompletableFuture.completedFuture(bucketedList);
-    }
-
+    /* Return the ordered list as a completed future */
+    return CompletableFuture.completedFuture(bucketedList);
+  }
 }
