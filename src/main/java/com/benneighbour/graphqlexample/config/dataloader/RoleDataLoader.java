@@ -40,6 +40,8 @@ public class RoleDataLoader {
     List<List<Role>> bucketedList =
         new ArrayList<>(Collections.nCopies(ids.size(), new ArrayList<>()));
 
+    /* TODO: Find a better way to batch load this!! */
+
     /* Batch load all of the companies that contain the given ids */
     roleDao.findAllByEmployeeIdIn(ids).stream()
         /* Convert to Key~Value Pair */

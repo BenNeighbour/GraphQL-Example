@@ -40,6 +40,8 @@ public class OfficeDataLoader {
     List<List<Office>> bucketedList =
         new ArrayList<>(Collections.nCopies(ids.size(), new ArrayList<>()));
 
+    /* TODO: Find a better way to batch load this!! */
+
     /* Batch load all of the companies that contain the given ids */
     officeDao.findAllByCompanyIdIn(ids).stream()
         /* Convert to Key~Value Pair */
