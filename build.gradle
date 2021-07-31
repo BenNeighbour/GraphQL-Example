@@ -39,15 +39,13 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:1.18.12"
     testCompileOnly "org.projectlombok:lombok:1.18.12"
     testAnnotationProcessor "org.projectlombok:lombok:1.18.12"
-
     implementation "io.leangen.graphql:graphql-spqr-spring-boot-starter:0.0.6"
-
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23'
+    implementation "org.postgresql:postgresql:42.2.23"
     implementation "org.hibernate.validator:hibernate-validator:7.0.1.Final"
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 test {

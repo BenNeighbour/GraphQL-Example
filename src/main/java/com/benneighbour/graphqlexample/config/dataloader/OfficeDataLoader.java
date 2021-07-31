@@ -42,7 +42,7 @@ public class OfficeDataLoader {
 
     /* TODO: Find a better way to batch load this!! */
 
-    /* Batch load all of the companies that contain the given ids */
+    /* Batch load all the companies that contain the given ids */
     officeDao.findAllByCompanyIdIn(ids).stream()
         /* Convert to Key~Value Pair */
         .flatMap(Collection::stream)

@@ -42,7 +42,7 @@ public class RoleDataLoader {
 
     /* TODO: Find a better way to batch load this!! */
 
-    /* Batch load all of the companies that contain the given ids */
+    /* Batch load all the companies that contain the given ids */
     roleDao.findAllByEmployeeIdIn(ids).stream()
         /* Convert to Key~Value Pair */
         .flatMap(Collection::stream)
